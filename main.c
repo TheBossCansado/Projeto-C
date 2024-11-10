@@ -2,20 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Definição das structs
 typedef struct Paciente {
     char nome[50];
     int idade;
     char diagnostico[100];
     struct Psicologo* psicologo;
     struct Paciente* prox;
-    struct Paciente* ant; // Ponteiro para o paciente anterior
+    struct Paciente* ant;
 } Paciente;
 
 typedef struct Psicologo {
     char nome[50];
     char especialidade[50];
     struct Psicologo* prox;
-    struct Psicologo* ant; // Ponteiro para o psicólogo anterior
+    struct Psicologo* ant;
 } Psicologo;
 
 typedef struct Sessao {
@@ -25,80 +26,66 @@ typedef struct Sessao {
     int duracao;
     char observacoes[200];
     struct Sessao* prox;
-    struct Sessao* ant; // Ponteiro para a sessão anterior
+    struct Sessao* ant;
 } Sessao;
 
 
-// Funções de criação (sem modificações significativas)
-// ... (código das funções criarPaciente, criarPsicologo e criarSessao permanece igual)
+// Funções de criação
+Paciente* criarPaciente(char* nome, int idade, char* diagnostico, Psicologo* psicologo) {
+    // ... (implementação - alocação de memória e tratamento de erros)
+}
 
+Psicologo* criarPsicologo(char* nome, char* especialidade) {
+    // ... (implementação - alocação de memória e tratamento de erros)
+}
+
+Sessao* criarSessao(char* data, Paciente* paciente, Psicologo* psicologo, int duracao, char* observacoes) {
+    // ... (implementação - alocação de memória e tratamento de erros)
+}
+
+// Funções adicionarPaciente, adicionarPsicologo, adicionarSessao (implementações)
+// ...
+
+// Funções exibirPacientes, exibirSessoes (implementações)
+// ...
+
+
+int main() {
+    Paciente* listaPacientes = NULL;
+    Psicologo* listaPsicologos = NULL;
+    Sessao* listaSessoes = NULL;
+
+
+Paciente* criarPaciente(char* nome, int idade, char* diagnostico, Psicologo* psicologo) {
+    Paciente* novoPaciente = (Paciente*)malloc(sizeof(Paciente));
+    if (!novoPaciente) { perror("Erro ao alocar Paciente"); exit(EXIT_FAILURE); }
+    strcpy(novoPaciente->nome, nome); // ... (inicializar os outros membros)
+    return novoPaciente;
+}
+
+// Implementar criarPsicologo() e criarSessao() de forma semelhante
 
 void adicionarPaciente(Paciente** lista, Paciente* novoPaciente) {
-    if (*lista == NULL) {
-        *lista = novoPaciente;
-        novoPaciente->prox = novoPaciente; // Circular
-        novoPaciente->ant = novoPaciente;
-    } else {
-        Paciente* ultimo = (*lista)->ant;
-        novoPaciente->prox = *lista;
-        novoPaciente->ant = ultimo;
-        ultimo->prox = novoPaciente;
-        (*lista)->ant = novoPaciente;
-        *lista = novoPaciente;
-    }
+    // ... (implementação da função)
 }
 
-void adicionarPsicologo(Psicologo** lista, Psicologo* novoPsicologo) {
-     if (*lista == NULL) {
-        *lista = novoPsicologo;
-        novoPsicologo->prox = novoPsicologo; // Circular
-        novoPsicologo->ant = novoPsicologo;
-    } else {
-        Psicologo* ultimo = (*lista)->ant;
-        novoPsicologo->prox = *lista;
-        novoPsicologo->ant = ultimo;
-        ultimo->prox = novoPsicologo;
-        (*lista)->ant = novoPsicologo;
-        *lista = novoPsicologo;
-    }
-}
-
-void adicionarSessao(Sessao** lista, Sessao* novaSessao) {
-    if (*lista == NULL) {
-        *lista = novaSessao;
-        novaSessao->prox = novaSessao; // Circular
-        novaSessao->ant = novaSessao;
-    } else {
-        Sessao* ultimo = (*lista)->ant;
-        novaSessao->prox = *lista;
-        novaSessao->ant = ultimo;
-        ultimo->prox = novaSessao;
-        (*lista)->ant = novaSessao;
-        *lista = novaSessao;
-    }
-}
-
+// Implementar adicionarPsicologo() e adicionarSessao()
 
 void exibirPacientes(Paciente* lista) {
-    if (lista == NULL) return;
-
-    Paciente* atual = lista;
-    do {
-        printf("Paciente: %s, Idade: %d, Diagnóstico: %s, Psicólogo: %s\n", 
-               atual->nome, atual->idade, atual->diagnostico, atual->psicologo ? atual->psicologo->nome : "Não atribuído"); // verifica se o psicólogo foi atribuído
-        atual = atual->prox;
-    } while (atual != lista); // Condição de parada para lista circular
+    // ... (implementação da função)
 }
 
 void exibirSessoes(Sessao* lista) {
-    if (lista == NULL) return;
-
-    Sessao* atual = lista;
-    do {
-        printf("Data: %s, Paciente: %s, Psicólogo: %s, Duração: %d minutos, Observações: %s\n", 
-               atual->data, atual->paciente->nome, atual->psicologo->nome, atual->duracao, atual->observacoes);
-        atual = atual->prox;
-    } while (atual != lista); // Condição de parada para lista circular
+    // ... (implementação da função)
 }
+    printf("=== Pacientes ===\n");
+    exibirPacientes(listaPacientes);
 
-// ... (restante do código main() sem alterações)
+    printf("\n=== Sessões ===\n");
+    exibirSessoes(listaSessoes);
+
+    // Liberação de memória (implementar para as três listas)
+    // ...
+
+    return 0;
+}
